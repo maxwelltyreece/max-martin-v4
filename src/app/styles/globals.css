@@ -1,0 +1,26 @@
+/* Font: PicNic by Velvetyne Type Foundry */
+/* https://velvetyne.fr/fonts/picnic/ */
+@font-face {
+  font-family: 'PicNic';
+  src: url('/fonts/PicNic/PicNic.woff2') format('woff2'),
+       url('/fonts/PicNic/PicNic.woff') format('woff'),
+       url('/fonts/PicNic/PicNic-Regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background-color: transparent; /* Remove black background to prevent flash */
+  color: #fff;
+  font-family: Arial, sans-serif;
+  min-height: 100vh;
+}
+
+
+h1, h2, h3 {
+  font-family: 'PicNic', 'Libertines Mono', monospace;
+  font-weight: normal;
+}

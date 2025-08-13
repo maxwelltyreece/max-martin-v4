@@ -1,0 +1,30 @@
+.navbar {
+  display: flex;
+  justify-content: center;
+  z-index: 10;
+}
+
+.links {
+  display: flex;
+  gap: 3rem;
+}
+
+.links a {
+  text-decoration: none;
+  font-size: 2rem;
+  font-weight: 500;
+  font-family: 'PicNic', 'Libertines Mono', monospace;
+  transition: opacity 0.2s ease;
+  color: inherit; /* Inherit color from parent motion.div */
+  line-height: 1.2;
+  display: block;
+  padding: 0.5rem 0.75rem;
+}
+
+
+
+.active {
+  text-decoration: underline;
+  text-decoration-color: inherit;
+  font-weight: bold;
+}
