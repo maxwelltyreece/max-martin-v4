@@ -9,10 +9,6 @@ interface Image {
   alt: string;
 }
 
-interface ImageCarouselProps {
-  // We'll add props later
-}
-
 const galleryImages: Image[] = [
   {
     src: '/gallery/Rock Night, 2022.JPG',
@@ -24,7 +20,7 @@ const galleryImages: Image[] = [
   }
 ];
 
-export default function ImageCarousel(props: ImageCarouselProps) {
+export default function ImageCarousel() {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const nextImage = () => {

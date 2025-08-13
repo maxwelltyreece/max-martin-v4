@@ -1,11 +1,9 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { useRouter } from 'next/navigation'
 import styles from './page.module.css'
 
 export default function Splash() {
-  const router = useRouter()
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
