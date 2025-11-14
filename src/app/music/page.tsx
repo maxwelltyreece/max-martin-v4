@@ -1,10 +1,12 @@
-import React from 'react';
+import React from 'react'
+import styles from './page.module.css'
 
 export default function Music() {
     return (
-        <main>
-            <h1>Music</h1>
-            <p>content soon</p>
+        <main className={styles.main}>
+            <div>
+                <img src="/animations/music_box_playing.gif" alt="Music box playing" className={styles.gif} />
+            </div>
         </main>
-    );
+    )
 }

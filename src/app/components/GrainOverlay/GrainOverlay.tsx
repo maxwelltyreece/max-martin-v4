@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { useRef, useMemo } from 'react';
+import { useRef, useMemo, useEffect } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 
@@ -143,24 +143,64 @@ const NoiseGrainMaterial = () => {
 };
 
 const GrainOverlay = () => {
+  const glRef = useRef<any>(null)
+  const camRef = useRef<any>(null)
+
+  // keep canvas and camera sized to the viewport
+  useEffect(() => {
+    function onResize() {
+      const w = window.innerWidth
+      const h = window.innerHeight
+      if (glRef.current) glRef.current.setSize(w, h)
+      if (camRef.current) {
+        camRef.current.aspect = w / h
+        camRef.current.updateProjectionMatrix()
+      }
+    }
+
+    window.addEventListener('resize', onResize)
+    return () => window.removeEventListener('resize', onResize)
+  }, [])
+
+  const handleCreated = ({ gl, camera }: any) => {
+    glRef.current = gl
+    camRef.current = camera
+    const w = window.innerWidth
+    const h = window.innerHeight
+    try {
+      gl.setSize(w, h)
+      camera.aspect = w / h
+      camera.updateProjectionMatrix()
+    } catch (e) {
+      // no-op if something can't be sized immediately
+    }
+  }
+
   return (
-    <div style={{
-      position: 'fixed',
-      inset: 0,
-      zIndex: 9,
-      pointerEvents: 'none',
-      mixBlendMode: 'multiply',
-      filter: 'blur(0.8px)'
-    }}>
+    <div
+      style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: '100vw',
+        height: '100vh',
+        // ensure the grain overlays the page content (main has zIndex: 10)
+        zIndex: 9999,
+        pointerEvents: 'none',
+        mixBlendMode: 'multiply',
+        filter: 'blur(0.8px)'
+      }}
+    >
       <Canvas
+        onCreated={handleCreated}
         camera={{ position: [0, 0, 1], fov: 75 }}
-        style={{ width: '100%', height: '100%' }}
+        style={{ width: '100vw', height: '100vh', pointerEvents: 'none' }}
         gl={{ alpha: true, premultipliedAlpha: false }}
       >
         <NoiseGrainMaterial />
       </Canvas>
     </div>
-  );
-};
+  )
+}
 
 export default GrainOverlay;

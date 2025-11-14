@@ -8,3 +8,30 @@
   padding: 2rem;
 }
 
+.animations {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  pointer-events: none;
+  z-index: 20;
+}
+
+.tvGif {
+  display: block;
+  width: 220px;
+  height: auto;
+  animation: float 4s ease-in-out infinite;
+}
+
+@media (min-width: 1024px) {
+  .tvGif {
+    width: 320px;
+  }
+}
+
+@keyframes float {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+  100% { transform: translateY(0); }
+}
+

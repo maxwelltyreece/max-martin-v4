@@ -21,13 +21,15 @@ export default function ClientRootWrapper({ children }: { children: ReactNode })
           zIndex: 1,
         }}
         animate={{
-          background: `linear-gradient(135deg, ${currentColors[0]} 0%, ${currentColors[1]} 50%, ${currentColors[2]} 100%)`,
+          background: `radial-gradient(circle at center, ${currentColors[0]} 10%, ${currentColors[1]} 100%, ${currentColors[2]} 100%)`,
         }}
         transition={{
           duration: 1.2,
           ease: "easeInOut",
         }}
       />
+
+    
 
       <GrainOverlay />
 

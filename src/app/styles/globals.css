@@ -14,7 +14,7 @@ html, body {
   margin: 0;
   padding: 0;
   background-color: transparent; /* Remove black background to prevent flash */
-  color: #fff;
+  color: #000000;
   font-family: Arial, sans-serif;
   min-height: 100vh;
 }
