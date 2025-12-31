@@ -1,6 +1,6 @@
 
 import ClientRootWrapper from "./components/Navbar/clientRootWrapper";
-import './styles/globals.css';
+import './globals.css';
 
 
 export const metadata = {

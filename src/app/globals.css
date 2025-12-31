@@ -1,0 +1,35 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@theme {
+
+
+}
+
+
+
+.content-container {
+  min-height: 100vh;
+  padding-top: clamp(80px, 10vh, 200px);
+  width: 90vw; 
+}
+
+.page-container {
+  min-height: 100vh;
+  position: relative; 
+  overflow: hidden;   
+  padding: 1rem;
+  
+}
+
+h1 {
+  @apply font-bold text-center text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl;
+}
+
+h2 {
+  @apply font-bold text-center text-base md:text-3xl text-neutral-100/60;
+}
+
+

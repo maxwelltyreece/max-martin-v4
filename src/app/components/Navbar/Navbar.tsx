@@ -1,89 +1,60 @@
 'use client'
 
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { useRouter, usePathname } from "next/navigation";
+import { useState } from "react";
 import { motion } from 'framer-motion'
-import styles from './Navbar.module.css'
+import Icon from "../Icon/Icon";
+
+import { siBehance, siGithub } from "simple-icons";
 
 export default function Navbar() {
-  const pathname = usePathname()
+  const router = useRouter();
+  const [fade, setFade] = useState(false);
+  const pathname = usePathname() || '/';
 
-  // Determine text color based on page
-  const getTextColor = () => {
-    if (pathname === '/gallery' || pathname === '/projects') {
-      return '#1F3D2C' // Dark green for light backgrounds
-    }
-    return '#FAFFFA' // Light cream for darker backgrounds
+
+
+   function handleMenuClick(href: string) {
+    setFade(true);
+    setTimeout(() => router.push(href), 1400);
   }
 
   return (
-    <nav className={styles.navbar}>
-      <div className={styles.links}>
-        <motion.div
-          animate={{ color: getTextColor() }}
-          transition={{ duration: 1.2, ease: "easeInOut" }}
-          style={{ display: 'inline-block' }}
-        >
-          <Link
-            href="/projects"
-            className={pathname === '/projects' ? styles.active : ''}
-          >
-            projects
-          </Link>
-        </motion.div>
-        
-        <motion.div
-          animate={{ color: getTextColor() }}
-          transition={{ duration: 1.2, ease: "easeInOut" }}
-          style={{ display: 'inline-block' }}
-        >
-          <Link
-            href="/production"
-            className={pathname === '/production' ? styles.active : ''}
-          >
-            production
-          </Link>
-        </motion.div>
+    <motion.div>
+      <span className='flex justify-between px-5 pt-5 md:px-10'>
+        <div>
+          <nav className="flex gap-4 place-items-start">
+          { !pathname.startsWith('/me') && (
+            <button onClick={() => handleMenuClick('/me')} className="  cursor-pointer">
+              <h2>me</h2>
+            </button>
+          )}
 
-        <motion.div
-          animate={{ color: getTextColor() }}
-          transition={{ duration: 1.2, ease: "easeInOut" }}
-          style={{ display: 'inline-block' }}
-        >
-          <Link
-            href="/"
-            className={pathname === '/' ? styles.active : ''}
-          >
-            h
-          </Link>
-        </motion.div>
+          { pathname !== '/' && (
+            <button onClick={() => handleMenuClick('/')} className="  cursor-pointer">
+              <h2>home</h2>
+            </button>
+          )}
 
-        <motion.div
-          animate={{ color: getTextColor() }}
-          transition={{ duration: 1.2, ease: "easeInOut" }}
-          style={{ display: 'inline-block' }}
-        >
-          <Link
-            href="/music"
-            className={pathname === '/music' ? styles.active : ''}
-          >
-            music
-          </Link>
-        </motion.div>
+          { !pathname.startsWith('/projects') && (
+            <button onClick={() => handleMenuClick('/projects')} className=" cursor-pointer">
+              <h2>projects</h2>
+            </button>
+          )}
+          </nav>
+        </div>
 
-        <motion.div
-          animate={{ color: getTextColor() }}
-          transition={{ duration: 1.2, ease: "easeInOut" }}
-          style={{ display: 'inline-block' }}
-        >
-          <Link
-            href="/gallery"
-            className={pathname === '/gallery' ? styles.active : ''}
-          >
-            gallery
-          </Link>
-        </motion.div>
-      </div>
-    </nav>
+        <h2 className="flex gap-3">
+          <a href="https://www.behance.net/maxwellmartin2" target="_blank" rel="noopener noreferrer">
+            <Icon path={siBehance.path} />
+          </a>
+
+          <a href="https://github.com/maxwelltyreece" target="_blank" rel="noopener noreferrer">
+            <Icon path={siGithub.path} />
+          </a>
+        </h2>
+      </span>
+    </motion.div>
+    
   )
 }

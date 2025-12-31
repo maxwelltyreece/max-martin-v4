@@ -18,7 +18,7 @@ export default function ClientRootWrapper({ children }: { children: ReactNode })
         style={{
           position: "fixed",
           inset: 0,
-          zIndex: 1,
+          zIndex: -1,
         }}
         animate={{
           background: `radial-gradient(circle at center, ${currentColors[0]} 10%, ${currentColors[1]} 100%, ${currentColors[2]} 100%)`,
@@ -29,10 +29,9 @@ export default function ClientRootWrapper({ children }: { children: ReactNode })
         }}
       />
 
-    
+        <GrainOverlay />
 
-      <GrainOverlay />
-
+      
       <Navbar />
 
       <main style={{ position: "relative", zIndex: 10, marginTop: "8rem" }}>{children}</main>
