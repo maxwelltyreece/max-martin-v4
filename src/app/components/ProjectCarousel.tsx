@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import ProjectCard from "./ProjectCard"
 import type { Project } from "@/lib/projects"
@@ -16,8 +16,10 @@ const VISIBLE_COUNT = 3
 export default function ProjectCarousel({ projects }: ProjectCarouselProps) {
   const [activeProject, setActiveProject] = useState<Project | null>(null)
   const [index, setIndex] = useState(0)
+  const [visibleCount, setVisibleCount] = useState(VISIBLE_COUNT)
 
   const total = projects.length
+  const displayCount = Math.min(visibleCount, Math.max(total, 1))
   const step = CARD_WIDTH + GAP
 
   const next = () => {
@@ -31,6 +33,23 @@ export default function ProjectCarousel({ projects }: ProjectCarouselProps) {
   // Duplicate projects to allow seamless looping
   const loopedProjects = [...projects, ...projects, ...projects]
   const offsetIndex = index + total
+
+  useEffect(() => {
+    const updateVisibleCount = () => {
+      const width = window.innerWidth
+      if (width < 640) {
+        setVisibleCount(1)
+      } else if (width < 1024) {
+        setVisibleCount(2)
+      } else {
+        setVisibleCount(3)
+      }
+    }
+
+    updateVisibleCount()
+    window.addEventListener("resize", updateVisibleCount)
+    return () => window.removeEventListener("resize", updateVisibleCount)
+  }, [])
 
   return (
     <>
@@ -49,7 +68,7 @@ export default function ProjectCarousel({ projects }: ProjectCarouselProps) {
           <div
             className="overflow-hidden"
             style={{
-              width: VISIBLE_COUNT * CARD_WIDTH + GAP * (VISIBLE_COUNT - 1),
+              width: displayCount * CARD_WIDTH + GAP * (displayCount - 1),
             }}
           >
             <motion.div
@@ -62,6 +81,9 @@ export default function ProjectCarousel({ projects }: ProjectCarouselProps) {
                   key={`${project.id}-${i}`}
                   title={project.title}
                   description={project.shortDescription}
+                  repoUrl={project.repoUrl}
+                  liveUrl={project.liveUrl}
+                  backgroundVideo={["/animations/box1.mp4", "/animations/box2.mp4", "/animations/box3.mp4"][i % 3]}
                   onClick={() => setActiveProject(project)}
                 />
               ))}

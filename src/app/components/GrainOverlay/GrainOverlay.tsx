@@ -187,8 +187,9 @@ const GrainOverlay = () => {
         // ensure the grain overlays the page content (main has zIndex: 10)
         zIndex: 9999,
         pointerEvents: 'none',
-        mixBlendMode: 'multiply',
-        filter: 'blur(0.8px)'
+        mixBlendMode: 'screen',
+        filter: 'blur(0.5px)',
+        opacity: 0.15,
       }}
     >
       <Canvas

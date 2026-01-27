@@ -3,6 +3,8 @@ export type Project = {
   title: string
   shortDescription: string
   longDescription: string[]
+  repoUrl?: string
+  liveUrl?: string
 }
 
 export const projects: Project[] = [

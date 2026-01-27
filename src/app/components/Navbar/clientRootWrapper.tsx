@@ -1,40 +1,39 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import Navbar from "./Navbar";
-import { pageGradients } from "@/lib/pageGradient";
 import GrainOverlay from "../GrainOverlay/GrainOverlay";
 
 import { ReactNode } from "react";
 
+const pageTransition = { duration: 1.5, ease: "easeOut" };
+const pageVariants = {
+  initial: { opacity: 0 },
+  animate: { opacity: 1, transition: pageTransition },
+  exit: { opacity: 0, transition: pageTransition },
+};
+
 export default function ClientRootWrapper({ children }: { children: ReactNode }) {
-  const pathname = usePathname();
-  const currentColors = pageGradients[pathname] || pageGradients["/"];
+  const pathname = usePathname() || "/";
 
   return (
-    <>
-      <motion.div
-        style={{
-          position: "fixed",
-          inset: 0,
-          zIndex: -1,
-        }}
-        animate={{
-          background: `radial-gradient(circle at center, ${currentColors[0]} 10%, ${currentColors[1]} 100%, ${currentColors[2]} 100%)`,
-        }}
-        transition={{
-          duration: 1.2,
-          ease: "easeInOut",
-        }}
-      />
-
-        <GrainOverlay />
-
-      
+    <div className="min-h-screen bg-black">
+      <GrainOverlay />
       <Navbar />
 
-      <main style={{ position: "relative", zIndex: 10, marginTop: "8rem" }}>{children}</main>
-    </>
+      <AnimatePresence mode="wait">
+        <motion.main
+          key={pathname}
+          style={{ position: "relative", zIndex: 10, marginTop: "2rem" }}
+          variants={pageVariants}
+          initial="initial"
+          animate="animate"
+          exit="exit"
+        >
+          {children}
+        </motion.main>
+      </AnimatePresence>
+    </div>
   );
 }

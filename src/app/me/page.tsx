@@ -10,6 +10,18 @@ export default function Me() {
     return (
         <motion.div>
             <span className="content-container">
+                <span className="mb-6 flex justify-center md:hidden">
+                    <video
+                        autoPlay
+                        muted
+                        loop
+                        playsInline
+                        preload="auto"
+                        className="h-10 w-auto object-contain"
+                    >
+                        <source src="/animations/me_anim.mp4" type="video/mp4" />
+                    </video>
+                </span>
                 <span className="bio-content">
                     <Image
                         src="/gallery/Profile Picture.png"
