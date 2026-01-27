@@ -2,10 +2,7 @@
 
 import { useRouter, usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
-import Icon from "../Icon/Icon";
 import { useState } from "react";
-
-import { siBehance, siGithub } from "simple-icons";
 
 export default function Navbar() {
   const router = useRouter();

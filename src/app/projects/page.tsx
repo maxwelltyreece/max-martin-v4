@@ -8,23 +8,23 @@ import { projects } from "@/lib/projects";
 export default function Projects() {
     return (
         <motion.div>
-            <span className="content-container">
-                <span className="mb-6 flex justify-center md:hidden">
+            <div className="content-container">
+                <div className="page-title-container">
                     <video
                         autoPlay
                         muted
                         loop
                         playsInline
                         preload="auto"
-                        className="h-10 w-auto object-contain"
+                        className="page-title-video"
                     >
                         <source src="/animations/projects_anim.mp4" type="video/mp4" />
                     </video>
-                </span>
-                <span>
+                </div>
+                <div>
                     <ProjectCarousel projects={projects} />
-                </span>
-            </span>
+                </div>
+            </div>
         </motion.div>
     );
 }

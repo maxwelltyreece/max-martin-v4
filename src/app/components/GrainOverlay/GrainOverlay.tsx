@@ -143,8 +143,8 @@ const NoiseGrainMaterial = () => {
 };
 
 const GrainOverlay = () => {
-  const glRef = useRef<any>(null)
-  const camRef = useRef<any>(null)
+  const glRef = useRef<THREE.WebGLRenderer | null>(null)
+  const camRef = useRef<THREE.PerspectiveCamera | null>(null)
 
   // keep canvas and camera sized to the viewport
   useEffect(() => {
@@ -162,16 +162,22 @@ const GrainOverlay = () => {
     return () => window.removeEventListener('resize', onResize)
   }, [])
 
-  const handleCreated = ({ gl, camera }: any) => {
+  const handleCreated = ({ gl, camera }: { gl: THREE.WebGLRenderer; camera: THREE.Camera }) => {
     glRef.current = gl
-    camRef.current = camera
+    if ("isPerspectiveCamera" in camera) {
+      camRef.current = camera as THREE.PerspectiveCamera
+    }
     const w = window.innerWidth
     const h = window.innerHeight
     try {
       gl.setSize(w, h)
-      camera.aspect = w / h
-      camera.updateProjectionMatrix()
-    } catch (e) {
+      if ("aspect" in camera) {
+        camera.aspect = w / h
+      }
+      if ("updateProjectionMatrix" in camera) {
+        (camera as THREE.PerspectiveCamera).updateProjectionMatrix()
+      }
+    } catch {
       // no-op if something can't be sized immediately
     }
   }
