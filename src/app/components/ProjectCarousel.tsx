@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import ProjectCard from "./ProjectCard"
-import type { Project } from "@/lib/projects"
+import type { Project } from "../../lib/projects"
 
 type ProjectCarouselProps = {
   projects: Project[]
@@ -104,31 +104,41 @@ export default function ProjectCarousel({ projects }: ProjectCarouselProps) {
       <AnimatePresence>
         {activeProject && (
           <motion.div
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setActiveProject(null)}
           >
             <motion.div
-              className="bg-neutral-950 text-white max-w-xl w-full mx-6 rounded-2xl p-8"
+              className="relative overflow-hidden bg-black text-white w-full mx-6 rounded-2xl p-12 border-2 border-white/90 max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl xl:max-w-3xl"
               layout
               onClick={(e) => e.stopPropagation()}
             >
-              <h2 className="text-2xl font-semibold mb-4">
-                {activeProject.title}
-              </h2>
+              <div className="relative z-10">
+                <h2 className="text-xl sm:text-2xl md:text-3xl text-center font-semibold mb-3 sm:mb-4 md:mb-6">
+                  {activeProject.title}
+                </h2>
 
-              <p className="text-neutral-400 leading-relaxed">
-                {activeProject.longDescription}
-              </p>
+              <div className="mt-3 sm:mt-4 md:mt-5 max-h-56 sm:max-h-64 md:max-h-72 lg:max-h-80 overflow-y-auto pr-2">
+                {activeProject.longDescription.map((paragraph, index) => (
+                  <p
+                    key={`${activeProject.id}-paragraph-${index}`}
+                    className="text-sm sm:text-base md:text-lg text-neutral-400 leading-relaxed"
+                    style={{ fontFamily: '"Times New Roman", Times, serif' }}
+                  >
+                    {paragraph}
+                  </p>
+                ))}
+              </div>
 
               <button
-                className="mt-6 text-sm text-neutral-400 hover:text-white"
+                className="mt-6 text-xs sm:text-sm text-neutral-400 hover:text-white"
                 onClick={() => setActiveProject(null)}
               >
                 Close
               </button>
+              </div>
             </motion.div>
           </motion.div>
         )}

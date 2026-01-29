@@ -1,12 +1,26 @@
 'use client'
 
+import { useEffect, useRef } from 'react'
 import styles from './page.module.css'
 
 export default function Splash() {
+  const titleVideoRef = useRef<HTMLVideoElement | null>(null)
+  const logoVideoRef = useRef<HTMLVideoElement | null>(null)
+
+  useEffect(() => {
+    if (titleVideoRef.current) {
+      titleVideoRef.current.playbackRate = 1.35
+    }
+    if (logoVideoRef.current) {
+      logoVideoRef.current.playbackRate = 1.35
+    }
+  }, [])
+
   return (
     <div className={`content-container`}>
       <div className="page-title-container">
         <video
+          ref={titleVideoRef}
           autoPlay
           muted
           loop
@@ -19,6 +33,7 @@ export default function Splash() {
       </div>
       <div className={`${styles.splashInner} flex flex-col items-center justify-center`}>
         <video
+          ref={logoVideoRef}
           autoPlay
           muted
           loop

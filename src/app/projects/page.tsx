@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import ProjectCarousel from "../components/ProjectCarousel";
-import { projects } from "@/lib/projects";
+import { projects } from "../../lib/projects";
 
 
 export default function Projects() {

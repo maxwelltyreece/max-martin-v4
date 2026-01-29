@@ -22,7 +22,7 @@ export default function Me() {
 
                 <div className="bio-content">
                     <Image
-                        src="/gallery/Profile Picture.png"
+                        src="/gallery/Profile Picture.jpg"
                         alt="Profile Picture"
                         width={200}
                         height={200}

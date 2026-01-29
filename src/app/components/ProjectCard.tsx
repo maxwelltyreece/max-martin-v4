@@ -40,7 +40,7 @@ export default function ProjectCard({
       </video>
       <div className="pointer-events-none absolute inset-0 bg-black/40" />
       <div className="relative z-10">
-        <h3 className="font-title text-xl text-center font-semibold mb-3 ">{title}</h3>
+        <h3 className="text-xl text-center font-semibold mb-3 ">{title}</h3>
         <p className="text-xs text-center">{description}</p>
         {hasLinks && (
           <div className="mt-4 flex items-center justify-center gap-3">

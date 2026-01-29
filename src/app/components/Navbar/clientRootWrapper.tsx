@@ -22,7 +22,7 @@ export default function ClientRootWrapper({ children }: { children: ReactNode })
       <GrainOverlay />
       <Navbar />
 
-      <AnimatePresence mode="wait">
+      <AnimatePresence mode="wait" initial={false}>
         <motion.main
           key={pathname}
           style={{ position: "relative", zIndex: 10}}

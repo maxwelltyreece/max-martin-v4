@@ -190,8 +190,8 @@ const GrainOverlay = () => {
         left: 0,
         width: '100vw',
         height: '100vh',
-        // ensure the grain overlays the page content (main has zIndex: 10)
-        zIndex: 9999,
+        // keep grain above page content (main has zIndex: 10) but below modals
+        zIndex: 20,
         pointerEvents: 'none',
         mixBlendMode: 'screen',
         filter: 'blur(0.5px)',
