@@ -1,11 +1,12 @@
 "use client";
 
 import { useRef, useMemo, useEffect } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
+import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 
 const NoiseGrainMaterial = () => {
   const meshRef = useRef<THREE.Mesh>(null);
+  const { viewport } = useThree();
   
   // Using Ashima's simplex noise - much higher quality
   const material = useMemo(() => {
@@ -137,7 +138,7 @@ const NoiseGrainMaterial = () => {
 
   return (
     <mesh ref={meshRef} material={material}>
-      <planeGeometry args={[2, 2]} />
+      <planeGeometry args={[viewport.width, viewport.height]} />
     </mesh>
   );
 };

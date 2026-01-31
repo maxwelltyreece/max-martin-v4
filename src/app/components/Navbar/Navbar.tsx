@@ -2,24 +2,44 @@
 
 import { useRouter, usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function Navbar() {
   const router = useRouter();
   const pathname = usePathname() || '/';
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isFadingOut, setIsFadingOut] = useState(false);
+  const navigateTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const fadeOutDuration = 0.35;
 
   function handleMenuClick(href: string) {
-    router.push(href);
+    if (isFadingOut) return;
+    setIsFadingOut(true);
     setIsMenuOpen(false);
+    navigateTimeoutRef.current = setTimeout(() => {
+      router.push(href);
+    }, fadeOutDuration * 1000);
   }
+
+  useEffect(() => {
+    setIsFadingOut(false);
+    return () => {
+      if (navigateTimeoutRef.current) {
+        clearTimeout(navigateTimeoutRef.current);
+      }
+    };
+  }, [pathname]);
 
   return (
     <motion.div
       key={pathname}
       initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ delay: 1.7, duration: 1.5, ease: "easeOut" }}
+      animate={{ opacity: isFadingOut ? 0 : 1 }}
+      transition={{
+        delay: isFadingOut ? 0 : 1.7,
+        duration: isFadingOut ? fadeOutDuration : 1.5,
+        ease: "easeOut",
+      }}
     >
       <span className='flex justify-between px-6 pt-5 md:px-12'>
         <div className="flex items-center">
@@ -79,7 +99,7 @@ export default function Navbar() {
                   loop
                   playsInline
                   preload="auto"
-                  className="h-10 w-auto object-contain"
+                  className="h-10 w-auto object-contain mt-[10px]"
                 >
                   <source src="/animations/projects_anim.mp4" type="video/mp4" />
                 </video>
@@ -191,7 +211,7 @@ export default function Navbar() {
                       loop
                       playsInline
                       preload="auto"
-                      className="h-12 w-auto object-contain"
+                      className="h-12 w-auto object-contain mt-[10px]"
                     >
                       <source src="/animations/projects_anim.mp4" type="video/mp4" />
                     </video>
