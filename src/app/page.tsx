@@ -18,20 +18,7 @@ export default function Splash() {
   }, [])
 
   return (
-    <div className={`content-container`}>
-      <div className="page-title-container">
-        <video
-          ref={titleVideoRef}
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="auto"
-          className="page-title-video"
-        >
-          <source src="/animations/home_anim.mp4" type="video/mp4" />
-        </video>
-      </div>
+    <div className={`content-container min-h-[100svh] sm:min-h-0 sm:justify-start`}>
       <div className={`${styles.splashInner} flex flex-col items-center justify-center`}>
         <div className="pb-24">
           <motion.video

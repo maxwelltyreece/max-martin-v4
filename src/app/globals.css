@@ -51,8 +51,11 @@ body {
 
 @media (max-width: 768px) {
   .content-container {
+    min-height: 100svh;
+    max-height: 100svh;
     padding-block: clamp(16px, 4vh, 48px);
-    padding-inline: clamp(14px, 6vw, 28px);
+    padding-inline: clamp(20px, 8vw, 36px);
+    padding-top: 30%;
   }
 }
 

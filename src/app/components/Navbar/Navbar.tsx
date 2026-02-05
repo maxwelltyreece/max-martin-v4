@@ -11,9 +11,15 @@ export default function Navbar() {
   const [isFadingOut, setIsFadingOut] = useState(false);
   const navigateTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const fadeOutDuration = 0.35;
+  const currentLabelVideo =
+    pathname === "/" ? "/animations/home_anim.mp4" : pathname.startsWith("/me") ? "/animations/me_anim.mp4" : pathname.startsWith("/projects") ? "/animations/projects_anim.mp4" : "";
 
   function handleMenuClick(href: string) {
     if (isFadingOut) return;
+    if (href === pathname) {
+      setIsMenuOpen(false);
+      return;
+    }
     setIsFadingOut(true);
     setIsMenuOpen(false);
     navigateTimeoutRef.current = setTimeout(() => {
@@ -41,7 +47,22 @@ export default function Navbar() {
         ease: "easeOut",
       }}
     >
-      <span className='flex justify-between px-6 pt-5 md:px-12'>
+      <span className='relative flex justify-between px-6 pt-5 md:px-12'>
+        {currentLabelVideo && (
+          <div className="md:hidden absolute left-1/2 -translate-x-1/2">
+            <video
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="auto"
+              className="h-8 w-auto object-contain pointer-events-none"
+              aria-hidden="true"
+            >
+              <source src={currentLabelVideo} type="video/mp4" />
+            </video>
+          </div>
+        )}
         <div className="flex items-center">
           <button
             onClick={() => setIsMenuOpen(true)}

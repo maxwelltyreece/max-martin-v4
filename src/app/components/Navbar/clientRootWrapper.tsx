@@ -25,7 +25,7 @@ export default function ClientRootWrapper({ children }: { children: ReactNode })
       <AnimatePresence mode="wait" initial={false}>
         <motion.main
           key={pathname}
-          style={{ position: "relative", zIndex: 10}}
+          style={{ position: "relative", zIndex: 10 }}
           variants={pageVariants}
           initial="initial"
           animate="animate"

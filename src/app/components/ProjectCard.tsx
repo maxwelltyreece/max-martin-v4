@@ -1,12 +1,11 @@
 "use client"
 
 import { motion } from "framer-motion"
+import { useState } from "react"
 
 type ProjectCardProps = {
   title: string
   description: string
-  repoUrl?: string
-  liveUrl?: string
   backgroundVideo: string
   onClick: () => void
 }
@@ -14,16 +13,14 @@ type ProjectCardProps = {
 export default function ProjectCard({
   title,
   description,
-  repoUrl,
-  liveUrl,
   backgroundVideo,
   onClick,
 }: ProjectCardProps) {
-  const hasLinks = Boolean(repoUrl || liveUrl)
+  const [videoLoaded, setVideoLoaded] = useState(false)
 
   return (
     <motion.article
-      className="relative min-w-[300px] overflow-hidden text-white rounded-2xl p-12 cursor-pointer"
+      className={`relative w-[260px] sm:w-[300px] shrink-0 box-border overflow-hidden text-white rounded-2xl p-12 cursor-pointer ${videoLoaded ? "bg-transparent" : "bg-neutral-900"}`}
       whileHover={{ scale: 1.03 }}
       onClick={onClick}
       layout
@@ -34,60 +31,15 @@ export default function ProjectCard({
         loop
         playsInline
         preload="auto"
+        onLoadedData={() => setVideoLoaded(true)}
         className="pointer-events-none mix-blend-screen absolute inset-0 h-full w-full object-fill"
       >
         <source src={backgroundVideo} type="video/mp4" />
       </video>
-      <div className="pointer-events-none absolute inset-0 bg-black/40" />
+      <div className="pointer-events-none absolute inset-0 " />
       <div className="relative z-10">
         <h3 className="text-xl text-center font-semibold mb-3 ">{title}</h3>
         <p className="text-xs text-center">{description}</p>
-        {hasLinks && (
-          <div className="mt-4 flex items-center justify-center gap-3">
-            {repoUrl && (
-              <a
-                href={repoUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="View GitHub repository"
-                className="inline-flex items-center"
-                onClick={(event) => event.stopPropagation()}
-              >
-                <video
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  preload="auto"
-                  className="h-8 w-auto object-contain mix-blend-screen"
-                >
-                  <source src="/animations/github_anim.mp4" type="video/mp4" />
-                </video>
-              </a>
-            )}
-            {liveUrl && (
-              <a
-                href={liveUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="View live project"
-                className="inline-flex items-center"
-                onClick={(event) => event.stopPropagation()}
-              >
-                <video
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  preload="auto"
-                  className="h-8 w-auto object-contain mix-blend-screen"
-                >
-                  <source src="/animations/projects_anim.mp4" type="video/mp4" />
-                </video>
-              </a>
-            )}
-          </div>
-        )}
       </div>
     </motion.article>
   )
